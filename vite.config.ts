@@ -2,6 +2,26 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import * as path from 'path'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
+import { createHtmlPlugin } from 'vite-plugin-html'
+
+const ReleaseVersion = require('./package.json').version
+
+function getCurrentTime() {
+  const date = new Date()
+  const year = date.getFullYear()
+  const month = date.getMonth() + 1
+  const monthFm = month < 10 ? '0' + month : month
+  const day = date.getDate()
+  const dayFm = day < 10 ? '0' + day : day
+  const h = date.getHours()
+  const hFm = h < 10 ? '0' + h : h
+  const m = date.getMinutes()
+  const mFm = m < 10 ? '0' + m : m
+  const s = date.getSeconds()
+  const sFm = s < 10 ? '0' + s : s
+  return year + '-' + monthFm + '-' + dayFm + ' ' + hFm + ':' + mFm + ':' + sFm
+}
+const ReleaseTime = getCurrentTime()
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -25,6 +45,22 @@ export default defineConfig({
       iconDirs: [path.resolve(process.cwd(), 'src/assets/icons')],
       // 指定symbolId格式
       symbolId: 'icon-[name]'
+    }),
+    createHtmlPlugin({
+      minify: true,
+      pages: [
+        {
+          filename: 'index.html',
+          template: 'index.html',
+          injectOptions: {
+            data: {
+              title: import.meta.env?.VITE_APP_TITLE,
+              releaseTime: ReleaseTime,
+              releaseVersion: ReleaseVersion
+            }
+          }
+        }
+      ]
     })
   ],
   server: {
