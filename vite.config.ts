@@ -64,6 +64,7 @@ export default defineConfig({
     })
   ],
   server: {
+    host: '0.0.0.0',
     port: 9092, //启动端口
     headers: {
       'Access-Control-Allow-Origin': '*',
