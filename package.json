@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "server": "vite --mode loc",
+    "server": "vite --mode loc --open",
     "build:dev": "vite build --mode dev",
     "build:test": "vite build --mode test",
     "build:prod": "vite build --mode prod"
