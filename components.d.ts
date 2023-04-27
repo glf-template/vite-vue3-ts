@@ -10,18 +10,14 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     ElButton: typeof import('element-plus/es')['ElButton']
-    ElColorPicker: typeof import('element-plus/es')['ElColorPicker']
     ElIcon: typeof import('element-plus/es')['ElIcon']
     ElMenu: typeof import('element-plus/es')['ElMenu']
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
-    ElPopover: typeof import('element-plus/es')['ElPopover']
-    ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
     ElTabs: typeof import('element-plus/es')['ElTabs']
     Header: typeof import('./src/components/layout/Header.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    Setting: typeof import('./src/components/layout/Setting.vue')['default']
     SvgIcon: typeof import('./src/components/base/SvgIcon.vue')['default']
     UserConfig: typeof import('./src/components/layout/UserConfig.vue')['default']
   }

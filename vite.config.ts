@@ -9,7 +9,7 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
-const ReleaseVersion = require('./package.json').version
+
 
 function getCurrentTime() {
   const date = new Date()
@@ -26,7 +26,10 @@ function getCurrentTime() {
   const sFm = s < 10 ? '0' + s : s
   return year + '-' + monthFm + '-' + dayFm + ' ' + hFm + ':' + mFm + ':' + sFm
 }
+const ReleaseVersion = require('./package.json').version
 const ReleaseTime = getCurrentTime()
+
+const Timestamp = new Date().getTime().toString().match(/.*(.{8})/)[1] // 截取时间戳后八位
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -41,6 +44,15 @@ export default defineConfig({
     preprocessorOptions: {
       scss: {
         additionalData: '@use "@/assets/css/theme.scss" as *;'
+      }
+    }
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        entryFileNames: `[name].${Timestamp}.js`,   // works
+        chunkFileNames: `[name].${Timestamp}.js`,   // works
+        assetFileNames: `[name].${Timestamp}.[ext]` // does not work for images
       }
     }
   },
