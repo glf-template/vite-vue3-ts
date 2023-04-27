@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
+import navMenu from './navMenu'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -6,11 +7,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'home',
     component: () => import('@/views/home/index.vue')
   },
-  {
-    path: '/icon',
-    name: 'icon',
-    component: () => import('@/views/icon/index.vue')
-  }
+  ...navMenu
 ]
 
 const router = createRouter({

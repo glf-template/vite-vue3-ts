@@ -1,0 +1,35 @@
+$text-color: #303133;
+
+$white: #ffffff;
+$black: #000000;
+$primary-base: #2932d2;
+$success-base: #67c23a;
+$warning-base: #e6a23c;
+$danger-base: #f56c6c;
+$error-base: #f56c6c;
+$info-base: #909399;
+
+@forward 'element-plus/theme-chalk/src/common/var.scss' with (
+  $colors: (
+    'white': $white,
+    'black': $black,
+    'primary': (
+      'base': $primary-base
+    ),
+    'success': (
+      'base': $success-base
+    ),
+    'warning': (
+      'base': $warning-base
+    ),
+    'danger': (
+      'base': $danger-base
+    ),
+    'error': (
+      'base': $error-base
+    ),
+    'info': (
+      'base': $info-base
+    )
+  )
+);

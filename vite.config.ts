@@ -4,6 +4,11 @@ import * as path from 'path'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import { createHtmlPlugin } from 'vite-plugin-html'
 
+// 按需导入
+import AutoImport from 'unplugin-auto-import/vite'
+import Components from 'unplugin-vue-components/vite'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+
 const ReleaseVersion = require('./package.json').version
 
 function getCurrentTime() {
@@ -25,6 +30,7 @@ const ReleaseTime = getCurrentTime()
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  envDir: 'env',
   resolve: {
     //设置别名
     alias: {
@@ -34,7 +40,7 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: '@import "@/assets/css/variables.scss";'
+        additionalData: '@use "@/assets/css/theme.scss" as *;'
       }
     }
   },
@@ -48,19 +54,20 @@ export default defineConfig({
     }),
     createHtmlPlugin({
       minify: true,
-      pages: [
-        {
-          filename: 'index.html',
-          template: 'index.html',
-          injectOptions: {
-            data: {
-              title: import.meta.env?.VITE_APP_TITLE,
-              releaseTime: ReleaseTime,
-              releaseVersion: ReleaseVersion
-            }
-          }
+      template: 'public/index.html',
+      inject: {
+        data: {
+          title: "vite-vue3-ts",
+          releaseTime: ReleaseTime,
+          releaseVersion: ReleaseVersion
         }
-      ]
+      }
+    }),
+    AutoImport({
+      resolvers: [ElementPlusResolver()]
+    }),
+    Components({
+      resolvers: [ElementPlusResolver({ importStyle: 'sass' })]
     })
   ],
   server: {

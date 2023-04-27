@@ -3,15 +3,13 @@ import App from './App.vue'
 import router from './router'
 
 import '@/assets/css/index.scss'
+import 'element-plus/theme-chalk/src/message.scss'
 
-import ElementPlus from 'element-plus'
-import 'element-plus/dist/index.css'
+import store from '@/store'
 
-import store from "@/store"
+import installComponent from '@/plugins/component'
 
-import installComponent from "@/plugins/component"
-
-const app = createApp(App).use(router).use(ElementPlus).use(store)
+const app = createApp(App).use(router).use(store)
 
 // 注册全局组件
 installComponent(app)
