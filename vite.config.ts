@@ -9,8 +9,6 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
-
-
 function getCurrentTime() {
   const date = new Date()
   const year = date.getFullYear()
@@ -29,7 +27,10 @@ function getCurrentTime() {
 const ReleaseVersion = require('./package.json').version
 const ReleaseTime = getCurrentTime()
 
-const Timestamp = new Date().getTime().toString().match(/.*(.{8})/)[1] // 截取时间戳后八位
+const Timestamp = new Date()
+  .getTime()
+  .toString()
+  .match(/.*(.{8})/)[1] // 截取时间戳后八位
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -48,11 +49,12 @@ export default defineConfig({
     }
   },
   build: {
+    cssCodeSplit: true,
     rollupOptions: {
       output: {
-        entryFileNames: `[name].${Timestamp}.js`,   // works
-        chunkFileNames: `[name].${Timestamp}.js`,   // works
-        assetFileNames: `[name].${Timestamp}.[ext]` // does not work for images
+        entryFileNames: `js/[name].${Timestamp}.js`,
+        chunkFileNames: `js/[name].chunk-${Timestamp}.js`,
+        assetFileNames: `assets/[name].${Timestamp}.[ext]`
       }
     }
   },
@@ -69,7 +71,7 @@ export default defineConfig({
       template: 'public/index.html',
       inject: {
         data: {
-          title: "vite-vue3-ts",
+          title: 'vite-vue3-ts',
           releaseTime: ReleaseTime,
           releaseVersion: ReleaseVersion
         }
